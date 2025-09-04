@@ -23,7 +23,7 @@ def cadastro_nome():
         print("nome do aluno já está cadastrado,tente denovo...")
         return
     if not nome_aluno.replace(" ", "").isalpha():
-        print("o nome não deve conter números...")
+        print("o nome deve conter apenas letras..")
         return
 
     
@@ -69,26 +69,28 @@ def situacao_aluno():
     for i in range(len(lista_alunos)):
         print(f"{i+1} - {lista_alunos[i]}")
     try:
+        escolha = int(input("Escolha o número do aluno para ver a situação da nota: ")) - 1
         
-        escolha = int(input("Escolha o número do aluno para ver a situação da nota: ")) -1
-        if not lista_notas[escolha]:
-            print("O aluno ainda não tem uma nota cadastrada")
+   
+        if escolha < 0 or escolha >= len(lista_alunos):
+            print("Número de aluno inválido!")
             return
-        
-        if escolha >= 0 and escolha < len(lista_alunos):
-            media = sum(lista_notas[escolha]) / len(lista_notas[escolha])
-            print(f"A situação do(a) {lista_alunos[escolha]} é:")
-            print(f"Notas:{lista_notas[escolha]} \n média:{media: .2f}")
-            if media > 6 or media == 6:
-                print("Situação: Aprovado! Parabéns! ")
-            else:
-                print("A média esta abaixo de 6! situação: Reprovado!")
-        else:
-            print("Erro tente novamente...")
 
-            
+        if not lista_notas[escolha]:
+            print("O aluno ainda não tem uma nota cadastrada.")
+            return
+
+        media = sum(lista_notas[escolha]) / len(lista_notas[escolha])
+        print(f"A situação do(a) {lista_alunos[escolha]} é:")
+        print(f"Notas: {lista_notas[escolha]} \nMédia: {media:.2f}")
+
+        if media >= 6:
+            print("Situação: Aprovado! Parabéns!")
+        else:
+            print("A média está abaixo de 6! Situação: Reprovado!")
+
     except ValueError:
-        print("opção inválida, digite apenas números.")
+        print("Opção inválida, digite apenas números.")
         return
     
     
@@ -104,24 +106,25 @@ def media_faltante():
         print(f"{i+1} - {lista_alunos[i]}")
     try:
         escolha = int(input("Escolha o número do aluno para calcular a média faltante: ")) - 1
-        if not lista_notas[escolha]:
-            print(f"O aluno {lista_alunos[escolha]} ainda não tem notas cadastradas.")
-            return
-        if escolha >= 0 or escolha < len(lista_alunos):
+        
+        if escolha >= 0 and escolha < len(lista_alunos):
             media_atual = sum(lista_notas[escolha]) / len(lista_notas[escolha])
             faltante = media_min * (len(lista_notas[escolha]) + 1) - sum(lista_notas[escolha])
 
             print(f"\nAluno: {lista_alunos[escolha]}")
             print(f"Notas atuais: {lista_notas[escolha]}")
             print(f"Média atual: {media_atual:.2f}")
-
+            if not lista_notas[escolha]:
+                        print(f"O aluno {lista_alunos[escolha]} ainda não tem notas cadastradas.")
+                        return
             if media_atual >= 6:
                 print("✅ O aluno já atingiu a média mínima!")
             elif faltante > 10:
                 print("⚠️ Não é possível atingir a média mínima com a próxima nota.")
             else:
-                print(f"Para atingir média {media_min}, o aluno precisa tirar {faltante:.2f} na próxima nota.")
-        
+              print(f"Para atingir média {media_min}, o aluno precisa tirar {faltante:.2f} na próxima nota.")
+        else:
+            print("Erro tente novamente...")
     except ValueError:
         print("opção inválida, digite apenas números.")
 
