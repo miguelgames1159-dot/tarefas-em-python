@@ -10,7 +10,7 @@ def menu():
     print("2- Cadastro da nota")
     print("3- Situação do aluno")
     print("4- Média faltante")
-    print("5-sair")
+    print("0- sair")
     print("="*30)
 
 
@@ -118,9 +118,9 @@ def media_faltante():
                         print(f"O aluno {lista_alunos[escolha]} ainda não tem notas cadastradas.")
                         return
             if media_atual >= 6:
-                print("✅ O aluno já atingiu a média mínima!")
+                print(" O aluno já atingiu a média mínima!")
             elif faltante > 10:
-                print("⚠️ Não é possível atingir a média mínima com a próxima nota.")
+                print(" Não é possível atingir a média mínima com a próxima nota.")
             else:
               print(f"Para atingir média {media_min}, o aluno precisa tirar {faltante:.2f} na próxima nota.")
         else:
@@ -135,21 +135,28 @@ def media_faltante():
 def main():
     while True:
         menu()
-        opcao = input("\nQue função que usar? ").lower().strip()
-        match opcao:
-            case "1":
-                cadastro_nome()
-            case "2":
-                cadastro_notas()
-            case "3":
-                situacao_aluno()
-            case "4":
-                media_faltante()
-            case "5" | "sair":
-                print("saindo do sistema...")
-                break
-            case _: 
-                print("Opção inválida")
+        try:
+            opcao = int(input("\nQue função que usar? ")) #XXX Trabalhe com o input como int e nao string
+            match opcao:
+                case 0: #XXX Trocar case de saida para 0
+                    print("saindo do sistema...")
+                    break
+                case 1:
+                    cadastro_nome()
+                case 2:
+                    cadastro_notas()
+                case 3:
+                    situacao_aluno()
+                case 4:
+                    media_faltante()
+                
+                case _: 
+                    print("Opção inválida")
+                    
+                    
+        except ValueError:
+            print("Opção inválida")
+            
 
 if __name__ == "__main__":
     main()
